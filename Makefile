@@ -5,6 +5,6 @@ buildscws:
 	cd scws-c && aclocal && libtoolize && automake && autoconf && autoheader
 	cd scws-c && ./configure --prefix=`pwd`/"../scws-lib" && make && make install
 start:	
-	nohup /data/scws/bin/scws-words &
+	export LD_LIBRARY_PATH=/data/scws/scws-lib/lib/ && nohup /data/scws/bin/scws-words &
 stop:
 	killall scws-words
