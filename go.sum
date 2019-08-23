@@ -44,6 +44,10 @@ github.com/golang/text v0.3.0/go.mod h1:GUiq9pdJKRKKAZXiVgWFEvocYuREvC14NhI4OPgE
 github.com/gomodule/redigo v2.0.0+incompatible/go.mod h1:B4C85qUVwatsJoIUNIfCRsp7qO0iAmpGFZ4EELWSbC4=
 github.com/hetao29/goscws v0.0.0-20130817132951-16c49c56e273 h1:sx5q3hn89acQyNVXisNW85F+7L8Pzv+EGjOOJ4RL4cM=
 github.com/hetao29/goscws v0.0.0-20130817132951-16c49c56e273/go.mod h1:xK8EUtBQkgoyHtSWzq/LuvbRNHKZBlPQetPz9BMQjPI=
+github.com/hetao29/goscws v0.0.0-20190823094150-e4bfe6091746 h1:FEsHnoumV0sKaEXNh+jdJDnjFjIWcXAI0NGFV7Pbazo=
+github.com/hetao29/goscws v0.0.0-20190823094150-e4bfe6091746/go.mod h1:xK8EUtBQkgoyHtSWzq/LuvbRNHKZBlPQetPz9BMQjPI=
+github.com/hetao29/goscws v0.0.0-20190823101750-602e0f0ce3c4 h1:EMq2gp93baWhe3yltzYz6xm+6IaLB43MtYbv50ZeVEA=
+github.com/hetao29/goscws v0.0.0-20190823101750-602e0f0ce3c4/go.mod h1:xK8EUtBQkgoyHtSWzq/LuvbRNHKZBlPQetPz9BMQjPI=
 github.com/json-iterator/go v1.1.6/go.mod h1:+SdeFBvtyEkXs7REEP0seUULqWtbJapLOCVDaaPEHmU=
 github.com/lib/pq v1.0.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/mattn/go-isatty v0.0.7 h1:UvyT9uN+3r7yLEYSlJsbQGdsaB/a0DlgWP3pql6iwOc=

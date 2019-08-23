@@ -1,7 +1,7 @@
 package scws
 
 import (
-	"fmt"
+	_"fmt"
 	"github.com/hetao29/goscws"
 )
 
@@ -23,15 +23,19 @@ func (this *Info) Set() {
 	this.scws.SetCharset("utf8")
 	this.scws.SetIgnore(1)
 	//this.scws.SetMulti(goscws.SCWS_MULTI_SHORT & goscws.SCWS_MULTI_DUALITY & goscws.SCWS_MULTI_ZMAIN)
-	this.scws.SetMulti(goscws.SCWS_MULTI_SHORT & goscws.SCWS_MULTI_DUALITY)
+	//this.scws.SetMulti(goscws.SCWS_XDICT_MEM | goscws.SCWS_MULTI_SHORT | goscws.SCWS_MULTI_DUALITY)
+	this.scws.SetMulti(goscws.SCWS_XDICT_MEM)
 }
-func (this *Info) Get(words string) string {
+func (this *Info) Get(key string) []string {
 	scws_fork, _ := this.scws.Fork()
-	scws_fork.SendText(words)
+	scws_fork.SendText(key)
+	//var words []string;
+	words :=make([]string,0,100);
 	for scws_fork.Next() {
-		fmt.Println(scws_fork.GetRes())
+		//fmt.Println(scws_fork.GetRes())
+		words=append(words,scws_fork.GetRes().String)
 	}
-	return "DD"
+	return words;
 }
 func (this *Info) Free() {
 	this.scws.Free()

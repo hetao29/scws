@@ -16,6 +16,6 @@ replace (
 
 require github.com/gin-gonic/gin v1.4.0
 
-require github.com/hetao29/goscws v0.0.0-20130817132951-16c49c56e273
+require github.com/hetao29/goscws v0.0.0-20190823101750-602e0f0ce3c4
 
 require scws v1.0.0
