@@ -1,4 +1,6 @@
+scws:
+	cd scws-c && 
 build:
-	export GOPATH="/data/scws/go/" && go build -o bin/test .
+	export GOPATH=`pwd`"/go/" && go build -o bin/test .
 start:	
 	./bin/test
