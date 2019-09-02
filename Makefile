@@ -3,8 +3,10 @@ build:
 buildscws:
 	git submodule init && git submodule update
 	cd scws-c && aclocal && libtoolize && automake && autoconf && autoheader
-	cd scws-c && ./configure --prefix=`pwd`/"../scws-lib" && make && make install
+	cd scws-c && autoreconf -vif && ./configure --prefix=`pwd`/"../scws-lib" && make && make install
 start:	
 	export LD_LIBRARY_PATH=/data/scws/scws-lib/lib/ && nohup /data/scws/bin/scws-words &
 stop:
 	killall scws-words
+test:
+	curl "http://127.0.0.1:8020/words?key=关于幼教体系组织结构调整等的通知"
