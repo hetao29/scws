@@ -26,5 +26,12 @@ func main() {
 			"words": words,
 		})
 	})
+	r.GET("/reload", func(c *gin.Context) {
+		scws_api.Reload()
+		c.JSON(200, gin.H{
+			"message": "pong",
+			"reload": true,
+		})
+	})
 	r.Run(":8020") // listen and serve on 0.0.0.0:8080
 }
