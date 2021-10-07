@@ -2,7 +2,7 @@
 
 ## Docker & Swarm/Composer
 ```bash
-docker pull hetao29/ipquery
+docker pull hetao29/scws:latest
 ```
 
 ## 编译
