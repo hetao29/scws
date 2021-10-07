@@ -1,5 +1,15 @@
 # 说明
 
+## Docker & Swarm/Composer
+```bash
+docker pull hetao29/ipquery
+```
+
+## 编译
+```bash
+make build
+```
+
 ## 编译
 ```bash
 make build

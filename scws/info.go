@@ -3,7 +3,7 @@ package scws
 import (
 	_"fmt"
 	"os"
-	"github.com/hetao29/goscws"
+	"goscws"
 )
 
 func init() {
