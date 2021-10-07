@@ -1,8 +1,9 @@
 module main
 
-go 1.12
+go 1.17
 
 replace (
+	github.com/hetao29/goscws v1.0.0 => ./scws-lib
 	golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2 => github.com/golang/crypto v0.0.0-20190308221718-c2843e01d9a2
 	golang.org/x/net v0.0.0-20190503192946-f4e77d36d62c => github.com/golang/net v0.0.0-20190503192946-f4e77d36d62c
 	golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a => github.com/golang/sys v0.0.0-20190215142949-d0b11bdaac8a
@@ -14,8 +15,9 @@ replace (
 	scws v1.0.0 => ./scws
 )
 
-require github.com/gin-gonic/gin v1.4.0
+require github.com/gin-gonic/gin v1.7.4
 
-require github.com/hetao29/goscws v0.0.0-20190823101750-602e0f0ce3c4
-
-require scws v1.0.0
+require (
+	github.com/hetao29/goscws v1.0.0 // indirect
+	scws v1.0.0
+)
