@@ -18,7 +18,7 @@ WORKDIR /data/scws/
 
 RUN mkdir bin/
 RUN mkdir -p etc/dict/
-COPY etc/config.json  /data/scws/
+COPY etc/config.json  /data/scws/etc/
 COPY etc/dict/*  /data/scws/etc/dict/
 COPY --from=0 /data/scws/bin/scws bin/
 
