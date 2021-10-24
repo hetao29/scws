@@ -145,7 +145,6 @@ int _xdb_flock(int fd, int operation)
     return -1;
 }
 #else
-#warning no proper flock supported
 {
 	errno = 0;
 	return 0;

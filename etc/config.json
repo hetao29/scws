@@ -1,0 +1,8 @@
+{
+	"Dict": [
+		{ "Type": "XDB", "File": "/data/scws/etc/dict/dict.utf8.xdb" },
+		{ "Type": "TXT", "File": "/data/scws/etc/dict/user.utf8.txt" }
+	],
+	"Rule":"/data/scws/etc/dict/rules.utf8.ini"
+}
+

@@ -17,8 +17,9 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /data/scws/
 
 RUN mkdir bin/
-RUN mkdir dict/
-COPY dict/*  /data/scws/dict/
+RUN mkdir -p etc/dict/
+COPY etc/config.json  /data/scws/
+COPY etc/dict/*  /data/scws/etc/dict/
 COPY --from=0 /data/scws/bin/scws bin/
 
 HEALTHCHECK --interval=5s --timeout=5s --retries=3 \

@@ -1,6 +1,4 @@
-go
-*lo
-*o
 bin/*
+*.bak
 scws-c
 nohup.out

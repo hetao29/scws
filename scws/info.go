@@ -1,21 +1,23 @@
 package scws
 
 import (
-	_"fmt"
-	"os"
 	"goscws"
+	"log"
+	"os"
 )
 
 func init() {
 }
-func New() *Info {
+func New(conf Configuration) *Info {
 	info := new(Info)
+	info.config = conf
 	info.scws.New()
 	return info
 }
 
 type Info struct {
-	scws goscws.Scws
+	scws   goscws.Scws
+	config Configuration
 }
 
 func file_is_exists(f string) bool {
@@ -26,41 +28,43 @@ func file_is_exists(f string) bool {
 	return err == nil
 }
 func (this *Info) Set() {
-	this.scws.AddDict("/data/scws/dict/dict.utf8.xdb", goscws.SCWS_XDICT_XDB | goscws.SCWS_XDICT_MEM)
-	var file="/data/scws/dict/user.utf8.ini";
-	if(file_is_exists(file)){
-		this.scws.AddDict(file, goscws.SCWS_XDICT_TXT | goscws.SCWS_XDICT_MEM)
+	for _, v := range this.config.Dict {
+		if file_is_exists(v.File) {
+			if v.Type == "XDB" {
+				this.scws.AddDict(v.File, goscws.SCWS_XDICT_XDB|goscws.SCWS_XDICT_MEM)
+			} else if v.Type == "TXT" {
+				this.scws.AddDict(v.File, goscws.SCWS_XDICT_TXT|goscws.SCWS_XDICT_MEM)
+			} else {
+				log.Fatal("error: dict type is not supports", v.Type)
+			}
+			log.Println("notice: add dict file: ", v.Type, v.File)
+		} else {
+			log.Fatal("can't open dict file: ", v.Type, v.File)
+		}
 	}
-	this.scws.SetRule("/data/scws/dict/rules.utf8.ini")
+	if file_is_exists(this.config.Rule) {
+		log.Println("notice: set rule file: ", this.config.Rule)
+		this.scws.SetRule("/data/scws/dict/rules.utf8.ini")
+	} else {
+		log.Println("warning: not set rule file / or rule file not exists", this.config.Rule)
+	}
 	this.scws.SetCharset("utf8")
 	this.scws.SetIgnore(1)
-	//this.scws.SetMulti(goscws.SCWS_MULTI_SHORT & goscws.SCWS_MULTI_DUALITY & goscws.SCWS_MULTI_ZMAIN)
-	//this.scws.SetMulti(goscws.SCWS_XDICT_MEM | goscws.SCWS_MULTI_SHORT | goscws.SCWS_MULTI_DUALITY)
 	this.scws.SetMulti(goscws.SCWS_MULTI_SHORT)
 }
 func (this *Info) Reload() {
-	this.scws.SetDict("/data/scws/dict/dict.utf8.xdb", goscws.SCWS_XDICT_XDB | goscws.SCWS_XDICT_MEM)
-	var file="/data/scws/dict/user.utf8.ini";
-	if(file_is_exists(file)){
-		this.scws.AddDict(file, goscws.SCWS_XDICT_TXT | goscws.SCWS_XDICT_MEM)
-	}
-	this.scws.SetRule("/data/scws/dict/rules.utf8.ini")
-	this.scws.SetCharset("utf8")
-	this.scws.SetIgnore(1)
-	//this.scws.SetMulti(goscws.SCWS_MULTI_SHORT & goscws.SCWS_MULTI_DUALITY & goscws.SCWS_MULTI_ZMAIN)
-	//this.scws.SetMulti(goscws.SCWS_XDICT_MEM | goscws.SCWS_MULTI_SHORT | goscws.SCWS_MULTI_DUALITY)
-	this.scws.SetMulti(goscws.SCWS_MULTI_SHORT)
+	this.Set()
 }
 func (this *Info) Get(key string) []string {
 	scws_fork, _ := this.scws.Fork()
 	scws_fork.SendText(key)
 	//var words []string;
-	words :=make([]string,0,100);
+	words := make([]string, 0, 100)
 	for scws_fork.Next() {
 		//fmt.Println(scws_fork.GetRes())
-		words=append(words,scws_fork.GetRes().String)
+		words = append(words, scws_fork.GetRes().String)
 	}
-	return words;
+	return words
 }
 func (this *Info) Free() {
 	this.scws.Free()

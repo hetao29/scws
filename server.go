@@ -1,17 +1,41 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"github.com/gin-gonic/gin"
 	"log"
+	"os"
+	"os/exec"
+	"path"
 	"scws"
+	//"scws/config"
 )
 
 func init() {
 }
 
 func main() {
-	scws_api := scws.New()
+	_file, _ := exec.LookPath(os.Args[0])
+	_pwd, _ := path.Split(_file)
+	os.Chdir(_pwd)
+
+	//c := flag.String("c", "config.json", "Specify the configuration file.")
+	bindaddr := flag.String("b", "0.0.0.0:80", "listen port")
+	flag.Parse()
+	file, err := os.Open("../etc/config.json")
+	if err != nil {
+		log.Fatal("error: can't open config file: ", err)
+	}
+	defer file.Close()
+	decoder := json.NewDecoder(file)
+	Config := scws.Configuration{}
+	err = decoder.Decode(&Config)
+	if err != nil {
+		log.Fatal("error: can't decode config JSON: ", err)
+	}
+
+	scws_api := scws.New(Config)
 	scws_api.Set()
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
@@ -35,10 +59,7 @@ func main() {
 			"reload":  true,
 		})
 	})
-	var bindaddr *string
-	bindaddr = flag.String("b", "0.0.0.0:80", "listen port")
-	flag.Parse()
-	log.Println("bind addr:%v", *bindaddr)
-	err := r.Run(*bindaddr) // listen and serve on 0.0.0.0:8080
-	log.Println("err:%v", err)
+	log.Println("notice: bind addr:%v", *bindaddr)
+	err = r.Run(*bindaddr) // listen and serve on 0.0.0.0:8080
+	log.Println("error: %v", err)
 }

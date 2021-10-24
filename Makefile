@@ -1,5 +1,5 @@
 build:
-	go build -o bin/scws .
+	export GOPROXY=https://goproxy.cn && go build -o bin/scws .
 start:	
 	nohup /data/scws/bin/scws -b="0.0.0.0:8020" &
 stop:
