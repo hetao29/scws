@@ -1,5 +1,7 @@
 # 说明
 
+基于[scws](http://www.xunsearch.com/scws/)的golang的开源分词系统，支持直接部署或者docker镜像部署，支持多个自定义词库和规则文件，可以参考etc下的配置文件，或者Makefile的示例
+
 ## Docker & Swarm/Composer
 ```bash
 docker pull hetao29/scws:latest
