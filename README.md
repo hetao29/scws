@@ -1,6 +1,13 @@
 # 说明
 
-基于[scws](https://github.com/hightman/scws/)的golang的开源分词系统，支持直接部署或者docker镜像部署，支持多个自定义词库和规则文件，可以参考etc下的配置文件，或者Makefile的示例
+基于[scws](https://github.com/hightman/scws/)的golang的开源的中文分词系统，特点：
+1. 支持编译安装，纯golang代码，无需要第3方的静态和动态库（和scws已经混合编码）
+2. docker / docker swarm / k8s 部署
+3. 支持多个自定义词库，格式可以和txt也可以是xdb格式（参考 [scws](https://github.com/hightman/scws/) 的词典生成工具scws-gen-dict）
+4. 支持规则文件
+5. etc/dict下面可以把百度输入法的词库转换成txt分词词库的工具
+6. rest api接口进行分词，也支持实时reload词库操作
+具体可以参考etc下的配置文件，或者Makefile的示例
 
 ## Docker & Swarm/Composer
 ```bash
