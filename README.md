@@ -19,12 +19,6 @@ docker pull hetao29/scws:latest
 make build
 ```
 
-## 编译
-```bash
-make build
-```
-
-
 ## 运行
 
 ```bash
