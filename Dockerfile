@@ -4,13 +4,18 @@ LABEL version="1.0"
 
 WORKDIR /data/scws/
 
-COPY . .
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
-	&& apk update && apk add git tree build-base \
-	&& tree -L 3
-RUN export GOPROXY=https://goproxy.cn && go build -o bin/scws && rm -rf /var/lib/apk/*
+ENV GOPROXY=https://goproxy.cn,direct
 
-FROM alpine:3.14 as prod
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \ 
+	&& apk update && apk add tree build-base git
+
+COPY . .
+
+RUN	--mount=type=cache,target=/root/.cache/go-build \
+	--mount=type=cache,target=/go/pkg/mod \
+	go build -v -ldflags "-X main.version=1.0.0 -X main.build=`date -u +%Y-%m-%d%H:%M:%S`" -o bin/scws
+
+FROM alpine:3.15 as prod
 
 RUN apk --no-cache add ca-certificates
 

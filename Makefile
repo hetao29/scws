@@ -11,6 +11,8 @@ test:
 reload:
 	curl "http://127.0.0.1:8020/reload"
 docker-image:
-	docker build -t hetao29/scws .
+	DOCKER_BUILDKIT=1 docker build -t hetao29/scws .
+docker-image-nocache:
+	DOCKER_BUILDKIT=1 docker build --no-cache -t hetao29/scws .
 docker-push:
 	docker push hetao29/scws:latest
