@@ -15,7 +15,7 @@ replace (
 	scws v1.0.0 => ./scws
 )
 
-require github.com/gin-gonic/gin v1.7.4
+require github.com/gin-gonic/gin v1.7.7
 
 require (
 	goscws v1.0.0 // indirect
