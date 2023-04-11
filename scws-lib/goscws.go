@@ -12,6 +12,7 @@ import "C"
 import (
 	"errors"
 	"unsafe"
+	"sync"
 )
 
 const (
@@ -47,6 +48,7 @@ type Scws struct {
 	text   string  //分词的内容
 	c_text *C.char //c分词的内容
 	rs     Res     //分词结果
+	mu sync.Mutex
 }
 
 // 分词结果
@@ -77,14 +79,18 @@ func (s *Scws) Free() {
 		C.free(unsafe.Pointer(s.c_text))
 	}
 	// 释放scws对象
+	s.mu.Lock()
 	if s.s != nil {
 		C.scws_free(s.s)
 	}
+	s.mu.Unlock()
 }
 
 // Fork一个新的对象，共享原来的字典和规则
 func (s *Scws) Fork() (scws Scws, err error) {
+	s.mu.Lock()
 	rs := C.scws_fork(s.s)
+	s.mu.Unlock()
 	if rs == nil {
 		err = errors.New("内存不足")
 	}
