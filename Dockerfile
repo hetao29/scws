@@ -6,8 +6,12 @@ WORKDIR /data/scws/
 
 ENV GOPROXY=https://goproxy.cn,direct
 
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \ 
-	&& apk update && apk add tree build-base git
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
+	&& apk update \
+	&& apk add tzdata \
+	&& ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+	&& echo "Asia/Shanghai" > /etc/timezone \
+	&& apk add tree build-base git
 
 COPY . .
 
@@ -17,7 +21,12 @@ RUN	--mount=type=cache,target=/root/.cache/go-build \
 
 FROM alpine as prod
 
-RUN apk --no-cache add ca-certificates
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
+	&& apk update \
+	&& apk add tzdata \
+	&& ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+	&& echo "Asia/Shanghai" > /etc/timezone \
+	&& apk add ca-certificates
 
 WORKDIR /data/scws/
 
