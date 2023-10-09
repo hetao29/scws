@@ -11,8 +11,8 @@ package goscws
 import "C"
 import (
 	"errors"
-	"unsafe"
 	"sync"
+	"unsafe"
 )
 
 const (
@@ -26,21 +26,22 @@ const (
 )
 
 // scws主结构体
-// typedef struct scws_st {
-//   struct scws_st *p;
-//   xdict_t d; // 词典指针，可检测是否为 NULL 来判断是否加载成功
-//   rule_t r; // 规则集指针，可检测是否为 NULL 来判断是否加载成功
-//   unsigned char *mblen;
-//   unsigned int mode;
-//   unsigned char *txt;
-//   int len;
-//   int off;
-//   int wend;
-//   scws_res_t res0; // scws_res_t 解释见后面
-//   scws_res_t res1;
-//   word_t **wmap;
-//   struct scws_zchar *zmap;
-// } scws_st, *scws_t;
+//
+//	typedef struct scws_st {
+//	  struct scws_st *p;
+//	  xdict_t d; // 词典指针，可检测是否为 NULL 来判断是否加载成功
+//	  rule_t r; // 规则集指针，可检测是否为 NULL 来判断是否加载成功
+//	  unsigned char *mblen;
+//	  unsigned int mode;
+//	  unsigned char *txt;
+//	  int len;
+//	  int off;
+//	  int wend;
+//	  scws_res_t res0; // scws_res_t 解释见后面
+//	  scws_res_t res1;
+//	  word_t **wmap;
+//	  struct scws_zchar *zmap;
+//	} scws_st, *scws_t;
 type Scws struct {
 	s      C.scws_t     // scws的C对象
 	res    C.scws_res_t // C语言 分词结果集
@@ -48,7 +49,7 @@ type Scws struct {
 	text   string  //分词的内容
 	c_text *C.char //c分词的内容
 	rs     Res     //分词结果
-	mu sync.Mutex
+	mu     sync.Mutex
 }
 
 // 分词结果
@@ -58,7 +59,7 @@ type Res struct {
 	Idf    float64 //idf值
 }
 
-//  分配或初始化与 scws 系列操作的 scws_st 对象。该函数将自动分配、初始化、并返回新对象的指针。 只能通过调用 scws_free() 来释放该对象
+// 分配或初始化与 scws 系列操作的 scws_st 对象。该函数将自动分配、初始化、并返回新对象的指针。 只能通过调用 scws_free() 来释放该对象
 func (s *Scws) New() (err error) {
 	s.s = C.scws_new()
 	if s.s == nil {
@@ -74,12 +75,12 @@ func (s *Scws) SetScws(scws C.scws_t) {
 
 // 释放对象
 func (s *Scws) Free() {
+	s.mu.Lock()
 	// 释放文本对象
 	if s.c_text != nil {
 		C.free(unsafe.Pointer(s.c_text))
 	}
 	// 释放scws对象
-	s.mu.Lock()
 	if s.s != nil {
 		C.scws_free(s.s)
 	}

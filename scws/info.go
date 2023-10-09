@@ -64,7 +64,7 @@ func (this *Info) Get(key string) []string {
 		//fmt.Println(scws_fork.GetRes())
 		words = append(words, scws_fork.GetRes().String)
 	}
-	scws_fork.Free();
+	scws_fork.Free()
 	return words
 }
 func (this *Info) Free() {

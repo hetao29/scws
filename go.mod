@@ -1,6 +1,6 @@
 module main
 
-go 1.20
+go 1.21
 
 replace (
 	goscws v1.0.0 => ./scws-lib
