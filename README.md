@@ -33,6 +33,8 @@ make start
 
 ```ini
 #<word>[\t<tf>[\t<idf>[\t<attr>]]]
+新词
+新地 5 1 n
 ```
 
 ## 测试
