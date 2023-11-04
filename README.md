@@ -25,6 +25,16 @@ make build
 make start
 ```
 
+## 自定义字典(格式)
+
+1. <词>  <词频(TF)>  <词重(IDF)>  <词性(北大标注)>
+2. 用空格或者制表符分开,tf,idf,attr不是必须
+3. 词性参考 http://www.xunsearch.com/scws/docs.php#attr
+
+```ini
+#<word>[\t<tf>[\t<idf>[\t<attr>]]]
+```
+
 ## 测试
 
 ```bash

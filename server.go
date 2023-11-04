@@ -53,13 +53,15 @@ func main() {
 		})
 	})
 	r.GET("/reload", func(c *gin.Context) {
-		scws_api.Reload()
+		scws_api.Free()
+		scws_api = scws.New(Config)
+		scws_api.Set()
 		c.JSON(200, gin.H{
 			"message": "pong",
 			"reload":  true,
 		})
 	})
 	log.Println("notice: bind addr:%v", *bindaddr)
-	err = r.Run(*bindaddr) // listen and serve on 0.0.0.0:8080
+	err = r.Run(*bindaddr)
 	log.Println("error: %v", err)
 }

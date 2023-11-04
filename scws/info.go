@@ -52,9 +52,6 @@ func (this *Info) Set() {
 	this.scws.SetIgnore(1)
 	this.scws.SetMulti(goscws.SCWS_MULTI_SHORT)
 }
-func (this *Info) Reload() {
-	this.Set()
-}
 func (this *Info) Get(key string) []string {
 	scws_fork, _ := this.scws.Fork()
 	scws_fork.SendText(key)
